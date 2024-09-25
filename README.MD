@@ -1,28 +1,3 @@
-Votre README est déjà très bien structuré et couvre la plupart des aspects essentiels de votre projet. Cependant, voici quelques suggestions pour améliorer et adapter le document afin de garantir qu'il soit complet, clair et adapté à tous les utilisateurs potentiels :
-
-### Suggestions d'amélioration :
-
-1. **Ajouter une section "Introduction" :**
-   Une petite introduction au début pour donner un contexte rapide du projet, ses objectifs, et à qui il est destiné pourrait être utile. Cela peut aider les nouveaux développeurs ou utilisateurs à comprendre rapidement ce qu'est le projet.
-
-2. **Clarification des étapes d'installation :**
-   Vous pouvez clarifier davantage les étapes d'installation, notamment en spécifiant si certaines étapes sont spécifiques à un environnement de développement (local, staging, production).
-
-3. **Mise à jour des titres pour plus de clarté :**
-   Ajustez certains titres pour les rendre plus explicites, par exemple, "Running migrations" pourrait être "Database Migrations" pour être plus clair.
-
-4. **Ajout de liens vers la documentation :**
-   Si vous avez une documentation plus complète ailleurs (par exemple, via Sphinx ou MkDocs), ajoutez un lien direct vers cette documentation à la fin de chaque section concernée.
-
-5. **Précisions sur les tests :**
-   Vous pourriez ajouter une section sur les types de tests que vous utilisez (unit tests, integration tests, etc.) et ce qu'ils couvrent, pour informer les développeurs sur ce qui est testé.
-
-### Adaptation du README :
-
-Voici une version légèrement modifiée de votre README pour incorporer ces suggestions :
-
----
-
 # ICONIC API
 
 ## Introduction
