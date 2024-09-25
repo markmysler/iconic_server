@@ -1,4 +1,4 @@
-# ICONIC API
+# ICONIC API DOCS
 
 ## Introduction
 
