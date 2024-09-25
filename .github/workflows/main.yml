@@ -23,6 +23,7 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no root@147.182.214.108 << 'EOF'
           cd /home/iconic_server
+          git remote set-url origin https://github.com/markmysler/iconic_server.git
           git pull origin main  # Pull the latest changes
           docker compose down --remove-orphans   # (If using Docker) Stop current containers
           docker compose up --build -d  # (If using Docker) Restart containers
