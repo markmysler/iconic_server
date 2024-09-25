@@ -1,0 +1,29 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - main  # Run action on push to the main branch
+
+jobs:
+  deploy:
+    name: Deploy to Server
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy to server
+      run: |
+        ssh -o StrictHostKeyChecking=no root@147.182.214.108 << 'EOF'
+          cd /home/iconic_server
+          git pull origin main  # Pull the latest changes
+          docker-compose down --remove-orphans   # (If using Docker) Stop current containers
+          docker-compose up --build -d  # (If using Docker) Restart containers
+        EOF
