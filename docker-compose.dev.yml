@@ -52,10 +52,11 @@ services:
         condition: service_healthy
     ports:
       - "8080:8080"
+      - "8443:8443"
     env_file:
       - .env.keycloak
     environment:
-      - PROXY_ADDRESS_FORWARDING=false
+      - PROXY_ADDRESS_FORWARDING=true
       - KEYCLOAK_HOSTNAME_STRICT=false
       - KEYCLOAK_HOSTNAME_STRICT_HTTPS=false
     networks:
@@ -74,7 +75,7 @@ services:
       - PGADMIN_CONFIG_WTF_CSRF_SSL_STRICT=False
       - PGADMIN_CONFIG_CONSOLE_LOG_LEVEL=10
     ports:
-      - "5050:80"
+      - "5050:5050"
     depends_on:
       - db
     volumes:
@@ -110,10 +111,12 @@ services:
     image: nginx:latest
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf
       - ./web:/usr/share/nginx/html
       - ./app/static:/var/www/static
+      - 
     depends_on:
       - api
       - keycloak

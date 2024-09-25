@@ -46,12 +46,14 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.2
     container_name: keycloak
-    command: ["start"]
+    command: ["start", "--verbose"]
     depends_on:
       db:
         condition: service_healthy
     ports:
       - "8080:8080"
+    volumes:
+      - ./certs:/etc/nginx/certs
     env_file:
       - .env.keycloak
     environment:
@@ -71,10 +73,10 @@ services:
     environment:
       - PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=False
       - PGADMIN_CONFIG_WTF_CSRF_TIME_LIMIT=None
-      - PGADMIN_CONFIG_WTF_CSRF_SSL_STRICT=False
+      - PGADMIN_CONFIG_WTF_CSRF_SSL_STRICT=True
       - PGADMIN_CONFIG_CONSOLE_LOG_LEVEL=10
     ports:
-      - "5050:80"
+      - "5050:5050"
     depends_on:
       - db
     volumes:
