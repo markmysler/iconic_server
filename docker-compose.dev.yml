@@ -40,23 +40,22 @@ services:
       - internal
       - external
     command: >
-      sh -c "alembic upgrade heads && uvicorn app.main:app --host 0.0.0.0 --port 8000"
-
+      sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"
 
 # TODO: error en healthchecks a partir de version 25.0.0, cambiar version?
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.2
+    container_name: keycloak
     command: ["start-dev"]
     depends_on:
       db:
         condition: service_healthy
     ports:
       - "8080:8080"
-      - "8443:8443"
     env_file:
       - .env.keycloak
     environment:
-      - PROXY_ADDRESS_FORWARDING=true
+      - PROXY_ADDRESS_FORWARDING=false
       - KEYCLOAK_HOSTNAME_STRICT=false
       - KEYCLOAK_HOSTNAME_STRICT_HTTPS=false
     networks:
@@ -91,7 +90,7 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
-    command: ["pytest", "tests", "-v", "-s"]
+    command: ["pytest", "tests"]
     depends_on:
       db:
         condition: service_healthy
@@ -111,15 +110,24 @@ services:
     image: nginx:latest
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf
-      - ./web:/usr/share/nginx/html
       - ./app/static:/var/www/static
-      - 
+      - ./web:/usr/share/nginx/html
     depends_on:
       - api
       - keycloak
+    networks:
+      - internal
+      - external
+  nuxt:
+    build:
+      context: ./nuxt
+      dockerfile: ../Dockerfile.nuxt
+    ports:
+      - "3000:3000"
+    environment:
+      NUXT_PUBLIC_API_URL: localhost:3000
     networks:
       - internal
       - external
